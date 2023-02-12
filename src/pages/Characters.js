@@ -1,47 +1,69 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
-const Characters = () => {
+const Characters = ({ search }) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
+  const sizePicture = "/portrait_incredible.";
+
   useEffect(() => {
     const fetchData = async () => {
+      let filters = "";
+      if (search) {
+        filters = "?name=" + search;
+      }
       try {
         const response = await axios.get(
-          "https://site--marvel-backend--97yqlpf4l44b.code.run/characters"
-          // "https://site--backteste--7s5gbyff4tc7.code.run/characters"
-          // "http://localhost:3001/characters"
+          `https://site--marvel-backend--97yqlpf4l44b.code.run/characters${filters}`
+          // `http://localhost:3001/characters${filters}`
         );
-        console.log("response.data >>", response.data.results);
+        // console.log("response.data >>", response.data.results);
         setData(response.data.results);
         setIsLoading(false);
-        console.log(data);
       } catch (error) {
         console.log("error", error);
       }
     };
 
     fetchData();
-  }, []);
+  }, [search]);
 
   return isLoading ? (
     <div>Downloading</div>
   ) : (
-    <div>
-      {data.map((element, index) => {
-        return (
-          <img
-            key={index}
-            src={
-              element.thumbnail.path +
-              "/portrait_xlarge." +
-              element.thumbnail.extension
-            }
-            alt=""
-          />
-        );
-      })}
+    <div className="characters-page">
+      <div className="character-title container">
+        <h1>Personnages</h1>
+      </div>
+      <div className="list-characters container">
+        {data.map((element) => {
+          return (
+            <Link
+              key={element._id}
+              to="/Character"
+              state={{ character: element }}
+            >
+              <div className="character">
+                <img
+                  src={
+                    element.thumbnail.path +
+                    sizePicture +
+                    element.thumbnail.extension
+                  }
+                  alt="character of comics"
+                />
+                <div>
+                  <p>{element.name}</p>
+                  {element.description && <p>Description</p>}
+                  <p>{element.description}</p>
+                </div>
+              </div>
+            </Link>
+          );
+        })}
+      </div>
     </div>
   );
 };

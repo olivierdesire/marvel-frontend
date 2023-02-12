@@ -1,26 +1,27 @@
 import { useState, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 
-const Comics = ({ search }) => {
+const ComicsCharacter = () => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const sizePicture = "/portrait_uncanny.";
+  const sizeMaxPicture = "/portrait_uncanny.";
+  const sizeSmallPicture = "/portrait_small.";
+
+  const location = useLocation();
+
+  const characterID = location.state?.characterID;
+  console.log("characterID >>> ", characterID);
 
   useEffect(() => {
     const fetchData = async () => {
-      let filters = "";
-      if (search) {
-        filters = "?title=" + search;
-      }
-      console.log(filters);
-
       try {
         const response = await axios.get(
-          `https://site--marvel-backend--97yqlpf4l44b.code.run/comics${filters}`
-          //`http://localhost:3001/comics${filters}`
+          `https://site--marvel-backend--97yqlpf4l44b.code.run/comics/${characterID}`
+          // `http://localhost:3001/comics/${characterID}`
         );
-        setData(response.data.results);
+        setData(response.data);
         setIsLoading(false);
 
         // console.log("response.data >>", response.data.results);
@@ -30,23 +31,31 @@ const Comics = ({ search }) => {
     };
 
     fetchData();
-  }, [search]);
+  }, [characterID]);
 
   return isLoading ? (
     <div>Downloading</div>
   ) : (
     <div className="comic-page">
-      <div className="comic-title container">
-        <h1>Comics</h1>
+      <div className="comic-title-character container">
+        <h1>Comics du personnage</h1>
+        <Link to="/character">
+          <img
+            src={
+              data.thumbnail.path + sizeSmallPicture + data.thumbnail.extension
+            }
+            alt=""
+          />
+        </Link>
       </div>
       <div className="list-comics container">
-        {data.map((element) => {
+        {data.comics.map((element) => {
           return (
             <div key={element._id} className="comic">
               <img
                 src={
                   element.thumbnail.path +
-                  sizePicture +
+                  sizeMaxPicture +
                   element.thumbnail.extension
                 }
                 alt="One comic"
@@ -64,4 +73,4 @@ const Comics = ({ search }) => {
   );
 };
 
-export default Comics;
+export default ComicsCharacter;
