@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import ListOfComics from "../components/ListOfComics";
 
 const Character = () => {
@@ -30,7 +30,10 @@ const Character = () => {
           </div>
         </div>
         <div className="details-comics">
-          <p> Comics </p>
+          {console.log(character._id)}
+          <Link to="/ComicsCharacter" state={{ characterID: character._id }}>
+            <p className="text-comic"> Comics </p>
+          </Link>
           <div className="character-right">
             <ListOfComics characterID={character._id} />
           </div>

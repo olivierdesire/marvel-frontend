@@ -183,7 +183,8 @@ h2 {
 
 /* COMICS PAGE */
 
-.comic-page {
+.text-comic:hover {
+  color: red;
 }
 
 .comic-title {
