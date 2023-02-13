@@ -18,7 +18,6 @@ const Characters = ({ search, pages }) => {
           filters = "?name=" + search;
         }
       }
-      console.log(filters);
       try {
         const response = await axios.get(
           `https://site--marvel-backend--97yqlpf4l44b.code.run/characters${filters}`
