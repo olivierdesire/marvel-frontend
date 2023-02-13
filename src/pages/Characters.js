@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-const Characters = ({ search }) => {
+const Characters = ({ search, pages }) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -11,9 +11,14 @@ const Characters = ({ search }) => {
   useEffect(() => {
     const fetchData = async () => {
       let filters = "";
-      if (search) {
-        filters = "?name=" + search;
+      if (pages > 1 && !search) {
+        filters = "?skip=" + (pages - 1) * 100;
+      } else {
+        if (search) {
+          filters = "?name=" + search;
+        }
       }
+      console.log(filters);
       try {
         const response = await axios.get(
           `https://site--marvel-backend--97yqlpf4l44b.code.run/characters${filters}`
@@ -28,7 +33,7 @@ const Characters = ({ search }) => {
     };
 
     fetchData();
-  }, [search]);
+  }, [search, pages]);
 
   return isLoading ? (
     <div>Downloading</div>

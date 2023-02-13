@@ -11,7 +11,8 @@ const ComicsCharacter = () => {
 
   const location = useLocation();
 
-  const characterID = location.state?.characterID;
+  const character = location.state?.character;
+  const characterID = location.state?.character._id;
   console.log("characterID >>> ", characterID);
 
   useEffect(() => {
@@ -39,7 +40,7 @@ const ComicsCharacter = () => {
     <div className="comic-page">
       <div className="comic-title-character container">
         <h1>Comics du personnage</h1>
-        <Link to="/character">
+        <Link to="/character" state={{ character: character }}>
           <img
             src={
               data.thumbnail.path + sizeSmallPicture + data.thumbnail.extension

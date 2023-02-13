@@ -1,7 +1,7 @@
 import logo from "../assets/img/Marvel.png";
 import { Link } from "react-router-dom";
 
-const Header = ({ search, setSearch }) => {
+const Header = ({ search, setSearch, pages, setPages }) => {
   return (
     <header>
       <div className="container">
@@ -21,6 +21,28 @@ const Header = ({ search, setSearch }) => {
               setSearch(event.target.value);
             }}
           />
+          <div className="page">
+            <p>page</p>
+            <button
+              className={
+                pages === 1 ? "button-left unvisible" : "button-left visible"
+              }
+              onClick={() => {
+                setPages(pages - 1);
+              }}
+            >
+              ＜
+            </button>
+            <p>{pages}</p>
+            <button
+              className="button-right"
+              onClick={() => {
+                setPages(pages + 1);
+              }}
+            >
+              ＞
+            </button>
+          </div>
         </div>
         <div>
           <Link to="/">

@@ -9,12 +9,24 @@ import "./App.css";
 
 function App() {
   const [search, setSearch] = useState("");
+  const [pages, setPages] = useState(1);
   return (
     <BrowserRouter>
-      <Header search={search} setSearch={setSearch} />
+      <Header
+        search={search}
+        setSearch={setSearch}
+        pages={pages}
+        setPages={setPages}
+      />
       <Routes>
-        <Route path="/" element={<Characters search={search} />} />
-        <Route path="/Comics" element={<Comics search={search} />} />
+        <Route
+          path="/"
+          element={<Characters search={search} pages={pages} />}
+        />
+        <Route
+          path="/Comics"
+          element={<Comics search={search} pages={pages} />}
+        />
         <Route path="/Character" element={<Character />} />
         <Route path="/ComicsCharacter" element={<ComicsCharacter />} />
       </Routes>

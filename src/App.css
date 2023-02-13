@@ -49,6 +49,33 @@ header input {
   outline: none;
 }
 
+.page {
+  width: fit-content;
+  margin-top: 5px;
+  display: flex;
+  align-items: center;
+  background-color: red;
+  padding-left: 10px;
+  border-radius: 5px;
+}
+
+.page > button {
+  height: fit-content;
+  width: fit-content;
+  background-color: white;
+  color: red;
+  border: 0.1px solid black;
+  margin: 5px;
+  font-weight: bold;
+}
+
+.visible {
+  visibility: visible;
+}
+
+.unvisible {
+  visibility: hidden;
+}
 /* CHARACTERS */
 
 h2 {
@@ -183,9 +210,9 @@ h2 {
 
 /* COMICS PAGE */
 
-.text-comic:hover {
+/* .text-comic:hover {
   color: red;
-}
+} */
 
 .comic-title {
   padding: 200px 0px 50px 0px;
