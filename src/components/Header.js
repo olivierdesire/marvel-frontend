@@ -1,7 +1,7 @@
 import logo from "../assets/img/Marvel.png";
 import { Link } from "react-router-dom";
 
-const Header = ({ search, setSearch, pages, setPages }) => {
+const Header = ({ search, setSearch, pages, setPages, setFavoris }) => {
   return (
     <header>
       <div className="container">
@@ -11,6 +11,21 @@ const Header = ({ search, setSearch, pages, setPages }) => {
           </Link>
         </div>
         <div>
+          <div>
+            <Link to="/">
+              <button>Personnages</button>
+            </Link>
+            <Link to="/Comics">
+              <button>Comics</button>
+            </Link>
+            <button
+              onClick={() => {
+                setFavoris((current) => !current);
+              }}
+            >
+              Favoris
+            </button>
+          </div>
           <input
             type="text"
             name="search"
@@ -21,6 +36,8 @@ const Header = ({ search, setSearch, pages, setPages }) => {
               setSearch(event.target.value);
             }}
           />
+        </div>
+        <div>
           <div className="page">
             <p>page</p>
             <button
@@ -43,15 +60,6 @@ const Header = ({ search, setSearch, pages, setPages }) => {
               ＞
             </button>
           </div>
-        </div>
-        <div>
-          <Link to="/">
-            <button>Personnages</button>
-          </Link>
-          <Link to="/Comics">
-            <button>Comics</button>
-          </Link>
-          <button>test 3</button>
         </div>
       </div>
     </header>

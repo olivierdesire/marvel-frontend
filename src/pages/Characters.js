@@ -1,10 +1,13 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Cookies from "js-cookie";
 
-const Characters = ({ search, pages }) => {
+const Characters = ({ baseURL, search, pages, favoris }) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  const [tabFavoris, setTabFavoris] = useState([]);
 
   const sizePicture = "/portrait_incredible.";
 
@@ -19,10 +22,7 @@ const Characters = ({ search, pages }) => {
         }
       }
       try {
-        const response = await axios.get(
-          `https://site--marvel-backend--97yqlpf4l44b.code.run/characters${filters}`
-          // `http://localhost:3001/characters${filters}`
-        );
+        const response = await axios.get(`${baseURL}/characters${filters}`);
         // console.log("response.data >>", response.data.results);
         setData(response.data.results);
         setIsLoading(false);
@@ -32,7 +32,7 @@ const Characters = ({ search, pages }) => {
     };
 
     fetchData();
-  }, [search, pages]);
+  }, [baseURL, search, pages]);
 
   return isLoading ? (
     <div>Downloading</div>
@@ -43,28 +43,55 @@ const Characters = ({ search, pages }) => {
       </div>
       <div className="list-characters container">
         {data.map((element) => {
+          let cookieStar = false;
+          if (Cookies.get(`${element._id}`)) {
+            cookieStar = true;
+          }
+
           return (
-            <Link
-              key={element._id}
-              to="/Character"
-              state={{ character: element }}
-            >
-              <div className="character">
-                <img
-                  src={
-                    element.thumbnail.path +
-                    sizePicture +
-                    element.thumbnail.extension
-                  }
-                  alt="character of comics"
-                />
-                <div>
+            ((favoris && cookieStar) || !favoris) && (
+              <div key={element._id} className="character">
+                <Link to="/Character" state={{ character: element }}>
+                  <img
+                    src={
+                      element.thumbnail.path +
+                      sizePicture +
+                      element.thumbnail.extension
+                    }
+                    alt="character of comics"
+                  />
+                </Link>
+                <div className="col-right">
                   <p>{element.name}</p>
                   {element.description && <p>Description</p>}
                   <p>{element.description}</p>
+                  <button
+                    className={
+                      cookieStar ? "favoris color-red" : "favoris color-grey"
+                    }
+                    onClick={() => {
+                      if (Cookies.get(`${element._id}`)) {
+                        Cookies.remove(`${element._id}`);
+                        const copyTab = [];
+                        for (let i = 0; i < tabFavoris.length; i++) {
+                          if (element._id !== tabFavoris[i]) {
+                            copyTab.push(tabFavoris[i]);
+                          }
+                        }
+                        setTabFavoris(copyTab);
+                      } else {
+                        Cookies.set(`${element._id}`, element._id);
+                        const copyTab = [...tabFavoris];
+                        copyTab.push(element._id);
+                        setTabFavoris(copyTab);
+                      }
+                    }}
+                  >
+                    ⭑
+                  </button>
                 </div>
               </div>
-            </Link>
+            )
           );
         })}
       </div>

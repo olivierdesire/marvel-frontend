@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 
-const ComicsCharacter = () => {
+const ComicsCharacter = ({ baseURL }) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -18,10 +18,7 @@ const ComicsCharacter = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `https://site--marvel-backend--97yqlpf4l44b.code.run/comics/${characterID}`
-          // `http://localhost:3001/comics/${characterID}`
-        );
+        const response = await axios.get(`${baseURL}/comics/${characterID}`);
         setData(response.data);
         setIsLoading(false);
 
@@ -32,7 +29,7 @@ const ComicsCharacter = () => {
     };
 
     fetchData();
-  }, [characterID]);
+  }, [baseURL, characterID]);
 
   return isLoading ? (
     <div>Downloading</div>
@@ -40,13 +37,22 @@ const ComicsCharacter = () => {
     <div className="comic-page">
       <div className="comic-title-character container">
         <h1>Comics du personnage</h1>
-        <Link to="/character" state={{ character: character }}>
-          <img
-            src={
-              data.thumbnail.path + sizeSmallPicture + data.thumbnail.extension
-            }
-            alt=""
-          />
+        <Link
+          to="/character"
+          state={{ character: character }}
+          style={{ textDecoration: "none", color: "black" }}
+        >
+          <div className="link-character">
+            <img
+              src={
+                data.thumbnail.path +
+                sizeSmallPicture +
+                data.thumbnail.extension
+              }
+              alt=""
+            />
+            <p>{data.name}</p>
+          </div>
         </Link>
       </div>
       <div className="list-comics container">

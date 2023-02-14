@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const Comics = ({ search, pages }) => {
+const Comics = ({ baseURL, search, pages }) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -18,10 +18,7 @@ const Comics = ({ search, pages }) => {
         }
       }
       try {
-        const response = await axios.get(
-          `https://site--marvel-backend--97yqlpf4l44b.code.run/comics${filters}`
-          //`http://localhost:3001/comics${filters}`
-        );
+        const response = await axios.get(`${baseURL}/comics${filters}`);
         setData(response.data.results);
         setIsLoading(false);
 
@@ -32,7 +29,7 @@ const Comics = ({ search, pages }) => {
     };
 
     fetchData();
-  }, [search, pages]);
+  }, [baseURL, search, pages]);
 
   return isLoading ? (
     <div>Downloading</div>

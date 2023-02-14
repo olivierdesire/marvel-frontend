@@ -24,9 +24,9 @@ header > div {
   align-items: center;
 }
 
-header > div > div {
+header > div > div > div {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   gap: 10px;
 }
 
@@ -37,9 +37,11 @@ header > div > div button {
   border: none;
   background-color: red;
   color: white;
+  padding: 10px;
 }
 
 header input {
+  margin-top: 20px;
   width: 500px;
   height: 30px;
   border: none;
@@ -51,16 +53,18 @@ header input {
 
 .page {
   width: fit-content;
-  margin-top: 5px;
   display: flex;
   align-items: center;
   background-color: red;
   padding-left: 10px;
   border-radius: 5px;
+  color: white;
 }
 
 .page > button {
-  height: fit-content;
+  display: flex;
+  align-items: center;
+  height: 30px;
   width: fit-content;
   background-color: white;
   color: red;
@@ -70,12 +74,21 @@ header input {
 }
 
 .visible {
-  visibility: visible;
+  display: visible;
 }
 
 .unvisible {
   visibility: hidden;
 }
+
+.color-red {
+  color: red;
+}
+
+.color-grey {
+  color: grey;
+}
+
 /* CHARACTERS */
 
 h2 {
@@ -141,6 +154,24 @@ h2 {
 
 .character > div > p:nth-child(3) {
   text-align: justify;
+}
+
+.col-right {
+  position: relative;
+}
+
+.favoris {
+  position: absolute;
+  height: 30px;
+  width: 30px;
+  background-color: white;
+  bottom: 0px;
+  left: 0px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
 }
 
 /* CHARACTER DETAIL */
@@ -210,9 +241,9 @@ h2 {
 
 /* COMICS PAGE */
 
-/* .text-comic:hover {
+.text-comic:hover {
   color: red;
-} */
+}
 
 .comic-title {
   padding: 200px 0px 50px 0px;
@@ -236,9 +267,17 @@ h2 {
 }
 .comic-title-character {
   padding: 200px 0px 50px 0px;
-  display: flex;
+  /* display: flex; */
   justify-content: center;
   gap: 50px;
+}
+
+.link-character {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
 }
 
 .comic {
