@@ -7,7 +7,7 @@ const Characters = ({ baseURL, search, pages, favoris }) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const [tabFavoris, setTabFavoris] = useState([]);
+  const [isFavoris, setIsFavoris] = useState(false);
 
   const sizePicture = "/portrait_incredible.";
 
@@ -72,18 +72,10 @@ const Characters = ({ baseURL, search, pages, favoris }) => {
                     onClick={() => {
                       if (Cookies.get(`${element._id}`)) {
                         Cookies.remove(`${element._id}`);
-                        const copyTab = [];
-                        for (let i = 0; i < tabFavoris.length; i++) {
-                          if (element._id !== tabFavoris[i]) {
-                            copyTab.push(tabFavoris[i]);
-                          }
-                        }
-                        setTabFavoris(copyTab);
+                        setIsFavoris((current) => !current);
                       } else {
                         Cookies.set(`${element._id}`, element._id);
-                        const copyTab = [...tabFavoris];
-                        copyTab.push(element._id);
-                        setTabFavoris(copyTab);
+                        setIsFavoris((current) => !current);
                       }
                     }}
                   >
