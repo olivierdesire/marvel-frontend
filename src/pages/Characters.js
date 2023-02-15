@@ -23,7 +23,7 @@ const Characters = ({ baseURL, search, pages, favoris }) => {
       }
       try {
         const response = await axios.get(`${baseURL}/characters${filters}`);
-        // console.log("response.data >>", response.data.results);
+
         setData(response.data.results);
         setIsLoading(false);
       } catch (error) {
@@ -46,6 +46,7 @@ const Characters = ({ baseURL, search, pages, favoris }) => {
           let cookieStar = false;
           if (Cookies.get(`${element._id}`)) {
             cookieStar = true;
+            console.log(isFavoris);
           }
 
           return (

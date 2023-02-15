@@ -35,9 +35,18 @@ header > div > div button {
   border-radius: 5px;
   width: 100px;
   border: none;
+  padding: 10px;
+  border: 0.1px solid red;
+}
+
+.color-button-white {
+  background-color: white;
+  color: red;
+}
+
+.color-button-red {
   background-color: red;
   color: white;
-  padding: 10px;
 }
 
 header input {
