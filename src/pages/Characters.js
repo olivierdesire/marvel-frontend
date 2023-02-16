@@ -46,7 +46,6 @@ const Characters = ({ baseURL, search, pages, favoris }) => {
           let cookieStar = false;
           if (Cookies.get(`${element._id}`)) {
             cookieStar = true;
-            console.log(isFavoris);
           }
 
           return (
@@ -68,7 +67,9 @@ const Characters = ({ baseURL, search, pages, favoris }) => {
                   <p>{element.description}</p>
                   <button
                     className={
-                      cookieStar ? "favoris color-red" : "favoris color-grey"
+                      cookieStar
+                        ? "favoris-characters color-red"
+                        : "favoris-characters color-grey"
                     }
                     onClick={() => {
                       if (Cookies.get(`${element._id}`)) {

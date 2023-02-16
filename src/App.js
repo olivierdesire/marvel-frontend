@@ -11,7 +11,8 @@ function App() {
   const [search, setSearch] = useState("");
   const [pages, setPages] = useState(1);
   const [favoris, setFavoris] = useState(false);
-  const [origin, setOrigin] = useState("Personnages");
+  const [origin, setOrigin] = useState("Characters");
+  const [currentPage, setCurrentPage] = useState("Characters");
 
   const baseURL = "https://site--marvel-backend--97yqlpf4l44b.code.run";
   // const baseURL = "http://localhost:3001/";
@@ -26,6 +27,8 @@ function App() {
         setFavoris={setFavoris}
         origin={origin}
         setOrigin={setOrigin}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
       />
       <Routes>
         <Route
@@ -41,12 +44,24 @@ function App() {
         />
         <Route
           path="/Comics"
-          element={<Comics baseURL={baseURL} search={search} pages={pages} />}
+          element={
+            <Comics
+              baseURL={baseURL}
+              search={search}
+              pages={pages}
+              favoris={favoris}
+            />
+          }
         />
         <Route path="/Character" element={<Character baseURL={baseURL} />} />
         <Route
           path="/ComicsCharacter"
-          element={<ComicsCharacter baseURL={baseURL} />}
+          element={
+            <ComicsCharacter
+              baseURL={baseURL}
+              setCurrentPage={setCurrentPage}
+            />
+          }
         />
       </Routes>
     </BrowserRouter>

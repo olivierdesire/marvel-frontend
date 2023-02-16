@@ -1,5 +1,6 @@
 import logo from "../assets/img/Marvel.png";
 import { Link } from "react-router-dom";
+import ComicsCharacter from "./ListOfComics";
 
 const Header = ({
   search,
@@ -9,6 +10,8 @@ const Header = ({
   setFavoris,
   origin,
   setOrigin,
+  currentPage,
+  setCurrentPage,
 }) => {
   return (
     <header>
@@ -18,7 +21,8 @@ const Header = ({
             to="/"
             onClick={() => {
               setFavoris((current) => false);
-              setOrigin((current) => "Personnages");
+              setOrigin((current) => "Characters");
+              setCurrentPage((current) => "Characters");
             }}
           >
             <img src={logo} alt="logo Marvel" />
@@ -29,13 +33,14 @@ const Header = ({
             <Link to="/">
               <button
                 className={
-                  origin === "Personnages"
+                  origin === "Characters"
                     ? "color-button-red"
                     : "color-button-white"
                 }
                 onClick={() => {
                   setFavoris((current) => false);
-                  setOrigin((current) => "Personnages");
+                  setOrigin((current) => "Characters");
+                  setCurrentPage((current) => "Characters");
                 }}
               >
                 Personnages
@@ -51,13 +56,22 @@ const Header = ({
                 onClick={() => {
                   setFavoris((current) => false);
                   setOrigin((current) => "Comics");
+                  setCurrentPage((current) => "Comics");
                 }}
               >
                 Comics
               </button>
             </Link>
             {console.log(origin)}
-            <Link to={origin === "Comics" ? "/Comics" : "/"}>
+            <Link
+              to={
+                currentPage === "Comics"
+                  ? "/Comics"
+                  : currentPage === "ComicsCharacter"
+                  ? "/Comics"
+                  : "/"
+              }
+            >
               <button
                 className={
                   origin === "Favoris"
@@ -92,19 +106,29 @@ const Header = ({
                 pages === 1 ? "button-left unvisible" : "button-left visible"
               }
               onClick={() => {
-                setPages(pages - 1);
+                setPages((current) => 1);
               }}
             >
-              ＜
+              ≪
+            </button>
+            <button
+              className={
+                pages === 1 ? "button-left unvisible" : "button-left visible"
+              }
+              onClick={() => {
+                setPages((current) => pages - 1);
+              }}
+            >
+              ﹤
             </button>
             <p>{pages}</p>
             <button
               className="button-right"
               onClick={() => {
-                setPages(pages + 1);
+                setPages((current) => pages + 1);
               }}
             >
-              ＞
+              ﹥
             </button>
           </div>
         </div>

@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Cookies from "js-cookie";
 
-const Comics = ({ baseURL, search, pages }) => {
+const Comics = ({ baseURL, search, pages, favoris }) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+
+  const [isFavoris, setIsFavoris] = useState(false);
 
   const sizePicture = "/portrait_uncanny.";
 
@@ -40,22 +43,48 @@ const Comics = ({ baseURL, search, pages }) => {
       </div>
       <div className="list-comics container">
         {data.map((element) => {
+          let cookieStar = false;
+          if (Cookies.get(`${element._id}`)) {
+            cookieStar = true;
+          }
           return (
-            <div key={element._id} className="comic">
-              <img
-                src={
-                  element.thumbnail.path +
-                  sizePicture +
-                  element.thumbnail.extension
-                }
-                alt="One comic"
-              />
-              <div>
-                <p>{element.title}</p>
-                {element.description && <p>Description</p>}
-                <p>{element.description}</p>
+            ((favoris && cookieStar) || !favoris) && (
+              <div key={element._id} className="comic">
+                <img
+                  src={
+                    element.thumbnail.path +
+                    sizePicture +
+                    element.thumbnail.extension
+                  }
+                  alt="One comic"
+                />
+                <div className="col-right">
+                  <p>{element.title}</p>
+                  {element.description && <p>Description</p>}
+                  <div className="overflow-description">
+                    <p>{element.description}</p>
+                  </div>
+                  <button
+                    className={
+                      cookieStar
+                        ? "favoris-comics color-red"
+                        : "favoris-comics color-grey"
+                    }
+                    onClick={() => {
+                      if (Cookies.get(`${element._id}`)) {
+                        Cookies.remove(`${element._id}`);
+                        setIsFavoris((current) => !current);
+                      } else {
+                        Cookies.set(`${element._id}`, element._id);
+                        setIsFavoris((current) => !current);
+                      }
+                    }}
+                  >
+                    ⭑
+                  </button>
+                </div>
               </div>
-            </div>
+            )
           );
         })}
       </div>
