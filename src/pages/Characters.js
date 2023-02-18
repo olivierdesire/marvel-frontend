@@ -47,45 +47,46 @@ const Characters = ({ baseURL, search, pages, favoris }) => {
           if (Cookies.get(`${element._id}`)) {
             cookieStar = true;
           }
-
           return (
-            ((favoris && cookieStar) || !favoris) && (
-              <div key={element._id} className="character">
-                <Link to="/Character" state={{ character: element }}>
-                  <img
-                    src={
-                      element.thumbnail.path +
-                      sizePicture +
-                      element.thumbnail.extension
+            <div key={element._id} className="character">
+              <Link to="/Character" state={{ character: element }}>
+                <img
+                  src={
+                    element.thumbnail.path +
+                    sizePicture +
+                    element.thumbnail.extension
+                  }
+                  alt="character of comics"
+                />
+              </Link>
+              <div className="col-right">
+                <p>{element.name}</p>
+                {element.description && <p>Description</p>}
+                <p>{element.description}</p>
+                <button
+                  className={
+                    cookieStar
+                      ? "favoris-characters color-red"
+                      : "favoris-characters color-grey"
+                  }
+                  onClick={() => {
+                    if (Cookies.get(`${element._id}`)) {
+                      Cookies.remove(`${element._id}`);
+                      favoris.splice(favoris.indexOf(element._id), 1);
+                      console.log("favoris", favoris);
+                      setIsFavoris((current) => !current);
+                    } else {
+                      Cookies.set(`${element._id}`, element._id);
+                      favoris.push(element._id);
+                      console.log("favoris", favoris);
+                      setIsFavoris((current) => !current);
                     }
-                    alt="character of comics"
-                  />
-                </Link>
-                <div className="col-right">
-                  <p>{element.name}</p>
-                  {element.description && <p>Description</p>}
-                  <p>{element.description}</p>
-                  <button
-                    className={
-                      cookieStar
-                        ? "favoris-characters color-red"
-                        : "favoris-characters color-grey"
-                    }
-                    onClick={() => {
-                      if (Cookies.get(`${element._id}`)) {
-                        Cookies.remove(`${element._id}`);
-                        setIsFavoris((current) => !current);
-                      } else {
-                        Cookies.set(`${element._id}`, element._id);
-                        setIsFavoris((current) => !current);
-                      }
-                    }}
-                  >
-                    ⭑
-                  </button>
-                </div>
+                  }}
+                >
+                  ⭑
+                </button>
               </div>
-            )
+            </div>
           );
         })}
       </div>

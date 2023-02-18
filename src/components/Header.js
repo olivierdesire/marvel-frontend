@@ -1,18 +1,7 @@
 import logo from "../assets/img/Marvel.png";
 import { Link } from "react-router-dom";
-import ComicsCharacter from "./ListOfComics";
 
-const Header = ({
-  search,
-  setSearch,
-  pages,
-  setPages,
-  setFavoris,
-  origin,
-  setOrigin,
-  currentPage,
-  setCurrentPage,
-}) => {
+const Header = ({ search, setSearch, pages, setPages, origin, setOrigin }) => {
   return (
     <header>
       <div className="container">
@@ -20,9 +9,7 @@ const Header = ({
           <Link
             to="/"
             onClick={() => {
-              setFavoris((current) => false);
               setOrigin((current) => "Characters");
-              setCurrentPage((current) => "Characters");
             }}
           >
             <img src={logo} alt="logo Marvel" />
@@ -38,9 +25,7 @@ const Header = ({
                     : "color-button-white"
                 }
                 onClick={() => {
-                  setFavoris((current) => false);
                   setOrigin((current) => "Characters");
-                  setCurrentPage((current) => "Characters");
                 }}
               >
                 Personnages
@@ -54,24 +39,14 @@ const Header = ({
                     : "color-button-white"
                 }
                 onClick={() => {
-                  setFavoris((current) => false);
                   setOrigin((current) => "Comics");
-                  setCurrentPage((current) => "Comics");
                 }}
               >
                 Comics
               </button>
             </Link>
             {console.log(origin)}
-            <Link
-              to={
-                currentPage === "Comics"
-                  ? "/Comics"
-                  : currentPage === "ComicsCharacter"
-                  ? "/Comics"
-                  : "/"
-              }
-            >
+            <Link to="/Favoris">
               <button
                 className={
                   origin === "Favoris"
@@ -79,7 +54,6 @@ const Header = ({
                     : "color-button-white"
                 }
                 onClick={() => {
-                  setFavoris((current) => true);
                   setOrigin((current) => "Favoris");
                 }}
               >

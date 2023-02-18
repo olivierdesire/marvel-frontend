@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
 import axios from "axios";
 
-const ComicsCharacter = ({ baseURL, setCurrentPage }) => {
+const ComicsCharacter = ({ baseURL }) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isFavoris, setIsFavoris] = useState(false);
@@ -15,8 +15,6 @@ const ComicsCharacter = ({ baseURL, setCurrentPage }) => {
 
   const character = location.state?.character;
   const characterID = location.state?.character._id;
-
-  setCurrentPage((current) => "ComicsCharacter");
 
   useEffect(() => {
     const fetchData = async () => {
