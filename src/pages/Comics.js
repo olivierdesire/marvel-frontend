@@ -2,11 +2,9 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Cookies from "js-cookie";
 
-const Comics = ({ baseURL, search, pages }) => {
+const Comics = ({ baseURL, search, pages, favoris, setIsReloaded }) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-
-  const [isFavoris, setIsFavoris] = useState(false);
 
   const sizePicture = "/portrait_uncanny.";
 
@@ -63,7 +61,7 @@ const Comics = ({ baseURL, search, pages }) => {
                 <div className="overflow-description">
                   <p>{element.description}</p>
                 </div>
-                {/* <button
+                <button
                   className={
                     cookieStar
                       ? "favoris-comics color-red"
@@ -72,15 +70,19 @@ const Comics = ({ baseURL, search, pages }) => {
                   onClick={() => {
                     if (Cookies.get(`${element._id}`)) {
                       Cookies.remove(`${element._id}`);
-                      setIsFavoris((current) => !current);
+                      favoris.splice(favoris.indexOf(element._id), 1);
+                      console.log("favoris", favoris);
+                      setIsReloaded((current) => !current);
                     } else {
-                      Cookies.set(`${element._id}`, element.title);
-                      setIsFavoris((current) => !current);
+                      Cookies.set(`${element._id}`, element._id);
+                      favoris.push(element._id);
+                      console.log("favoris", favoris);
+                      setIsReloaded((current) => !current);
                     }
                   }}
                 >
                   ⭑
-                </button> */}
+                </button>
               </div>
             </div>
           );

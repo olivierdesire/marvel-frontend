@@ -1,11 +1,8 @@
 import { Link, useLocation } from "react-router-dom";
-import { useState } from "react";
 import ListOfComics from "../components/ListOfComics";
 import Cookies from "js-cookie";
 
-const Character = ({ baseURL }) => {
-  const [isFavoris, setIsFavoris] = useState(false);
-
+const Character = ({ baseURL, setIsReloaded }) => {
   const location = useLocation();
 
   const character = location.state.character;
@@ -42,10 +39,10 @@ const Character = ({ baseURL }) => {
                 onClick={() => {
                   if (Cookies.get(`${character._id}`)) {
                     Cookies.remove(`${character._id}`);
-                    setIsFavoris((current) => !current);
+                    setIsReloaded((current) => !current);
                   } else {
                     Cookies.set(`${character._id}`, character._id);
-                    setIsFavoris((current) => !current);
+                    setIsReloaded((current) => !current);
                   }
                 }}
               >

@@ -10,6 +10,7 @@ const Header = ({ search, setSearch, pages, setPages, origin, setOrigin }) => {
             to="/"
             onClick={() => {
               setOrigin((current) => "Characters");
+              setPages((current) => 1);
             }}
           >
             <img src={logo} alt="logo Marvel" />
@@ -45,7 +46,6 @@ const Header = ({ search, setSearch, pages, setPages, origin, setOrigin }) => {
                 Comics
               </button>
             </Link>
-            {console.log(origin)}
             <Link to="/Favoris">
               <button
                 className={
@@ -73,7 +73,9 @@ const Header = ({ search, setSearch, pages, setPages, origin, setOrigin }) => {
           />
         </div>
         <div>
-          <div className="page">
+          <div
+            className={origin !== "Favoris" ? "page visible" : "page unvisible"}
+          >
             <p>page</p>
             <button
               className={

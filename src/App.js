@@ -13,9 +13,10 @@ function App() {
   const [search, setSearch] = useState("");
   const [pages, setPages] = useState(1);
   const [origin, setOrigin] = useState("Characters");
+  const [isReloaded, setIsReloaded] = useState(false);
 
   const baseURL = "https://site--marvel-backend--97yqlpf4l44b.code.run";
-  // const baseURL = "http://localhost:3001/";
+  // const baseURL = "http://localhost:3001";
 
   // Récupération des Cookies
   const recupFavoris = () => {
@@ -44,19 +45,48 @@ function App() {
               search={search}
               pages={pages}
               favoris={favoris}
+              setIsReloaded={setIsReloaded}
             />
           }
         />
         <Route
           path="/Comics"
-          element={<Comics baseURL={baseURL} search={search} pages={pages} />}
+          element={
+            <Comics
+              baseURL={baseURL}
+              search={search}
+              pages={pages}
+              favoris={favoris}
+              setIsReloaded={setIsReloaded}
+            />
+          }
         />
-        <Route path="/Character" element={<Character baseURL={baseURL} />} />
+        <Route
+          path="/Character"
+          element={
+            <Character baseURL={baseURL} setIsReloaded={setIsReloaded} />
+          }
+        />
         <Route
           path="/ComicsCharacter"
-          element={<ComicsCharacter baseURL={baseURL} />}
+          element={
+            <ComicsCharacter
+              baseURL={baseURL}
+              favoris={favoris}
+              setIsReloaded={setIsReloaded}
+            />
+          }
         />
-        <Route path="/Favoris" element={<Favoris baseURL={baseURL} />} />
+        <Route
+          path="/Favoris"
+          element={
+            <Favoris
+              baseURL={baseURL}
+              favoris={favoris}
+              setIsReloaded={setIsReloaded}
+            />
+          }
+        />
       </Routes>
     </BrowserRouter>
   );

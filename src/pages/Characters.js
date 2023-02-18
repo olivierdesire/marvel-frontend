@@ -3,11 +3,9 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import Cookies from "js-cookie";
 
-const Characters = ({ baseURL, search, pages, favoris }) => {
+const Characters = ({ baseURL, search, pages, favoris, setIsReloaded }) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-
-  const [isFavoris, setIsFavoris] = useState(false);
 
   const sizePicture = "/portrait_incredible.";
 
@@ -74,12 +72,12 @@ const Characters = ({ baseURL, search, pages, favoris }) => {
                       Cookies.remove(`${element._id}`);
                       favoris.splice(favoris.indexOf(element._id), 1);
                       console.log("favoris", favoris);
-                      setIsFavoris((current) => !current);
+                      setIsReloaded((current) => !current);
                     } else {
                       Cookies.set(`${element._id}`, element._id);
                       favoris.push(element._id);
                       console.log("favoris", favoris);
-                      setIsFavoris((current) => !current);
+                      setIsReloaded((current) => !current);
                     }
                   }}
                 >

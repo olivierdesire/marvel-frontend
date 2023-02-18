@@ -3,10 +3,9 @@ import { Link, useLocation } from "react-router-dom";
 import Cookies from "js-cookie";
 import axios from "axios";
 
-const ComicsCharacter = ({ baseURL }) => {
+const ComicsCharacter = ({ baseURL, favoris, setIsReloaded }) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [isFavoris, setIsFavoris] = useState(false);
 
   const sizeMaxPicture = "/portrait_uncanny.";
   const sizeSmallPicture = "/portrait_small.";
@@ -88,10 +87,12 @@ const ComicsCharacter = ({ baseURL }) => {
                   onClick={() => {
                     if (Cookies.get(`${element._id}`)) {
                       Cookies.remove(`${element._id}`);
-                      setIsFavoris((current) => !current);
+                      favoris.splice(favoris.indexOf(element._id), 1);
+                      setIsReloaded((current) => !current);
                     } else {
                       Cookies.set(`${element._id}`, element._id);
-                      setIsFavoris((current) => !current);
+                      favoris.push(element._id);
+                      setIsReloaded((current) => !current);
                     }
                   }}
                 >
