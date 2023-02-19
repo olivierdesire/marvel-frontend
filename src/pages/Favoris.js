@@ -46,6 +46,8 @@ const Favoris = ({ baseURL, favoris, setFavoris, updateCookie }) => {
     <div>Downloading</div>
   ) : (
     <div>
+      {/* Favoris Characters*/}
+
       <div className="characters-page">
         <div className="favoris-character-title container">
           <h1>Personnages</h1>
@@ -94,6 +96,9 @@ const Favoris = ({ baseURL, favoris, setFavoris, updateCookie }) => {
           })}
         </div>
       </div>
+
+      {/* Favoris Comics*/}
+
       <div className="favoris-comic-page">
         <div className="favoris-comic-title container">
           <h1>Comics</h1>

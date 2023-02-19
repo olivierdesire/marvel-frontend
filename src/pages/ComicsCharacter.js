@@ -90,7 +90,7 @@ const ComicsCharacter = ({ baseURL, favoris, setFavoris, updateCookie }) => {
                       updateCookie(copyArray);
                     } else {
                       const copyArray = [...favoris];
-                      copyArray.push(character._id);
+                      copyArray.push(element._id);
                       setFavoris(copyArray);
                       updateCookie(copyArray);
                     }
