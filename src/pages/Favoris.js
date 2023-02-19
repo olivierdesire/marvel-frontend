@@ -43,7 +43,7 @@ const Favoris = ({ baseURL, favoris, setFavoris, updateCookie }) => {
   }, [baseURL, favoris]);
 
   return isLoading ? (
-    <div>Downloading</div>
+    <div className="downloading container">Downloading</div>
   ) : (
     <div>
       {/* Favoris Characters*/}
