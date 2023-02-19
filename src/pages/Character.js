@@ -15,7 +15,6 @@ const Character = ({ baseURL, favoris, setFavoris, updateCookie }) => {
     cookieStar = false;
   }
 
-  console.log("tabFavoris", favoris);
   return (
     <div className="character-page">
       <div className="container">
