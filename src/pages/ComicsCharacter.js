@@ -14,15 +14,12 @@ const ComicsCharacter = ({ baseURL, favoris, setFavoris, updateCookie }) => {
   const character = location.state?.character;
   const characterID = location.state?.character._id;
 
-  console.log("tabFavoris", favoris);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`${baseURL}/comics/${characterID}`);
         setData(response.data);
         setIsLoading(false);
-
-        // console.log("response.data >>", response.data.results);
       } catch (error) {
         console.log("error", error);
       }

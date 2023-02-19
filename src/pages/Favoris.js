@@ -10,42 +10,33 @@ const Favoris = ({ baseURL, favoris, setFavoris, updateCookie }) => {
   const sizePictureCharacter = "/portrait_incredible.";
   const sizePictureComic = "/portrait_uncanny.";
 
-  console.log("tabfavoris >>", favoris);
   useEffect(() => {
     const fetchData = async () => {
       let tabDataCharacters = [];
       let tabDataComics = [];
 
-      // favoris comics
-      console.log("taille tableau favori >>>", favoris.length);
       for (let i = 0; i < favoris.length; i++) {
         try {
-          // console.log("favoris >>", favoris[i]);
           const response = await axios.get(
             `${baseURL}/character/${favoris[i]}`
           );
           if (response.data) {
             tabDataCharacters.push(response.data);
           }
-          // console.log("character>>", response.data);
         } catch (error) {
-          console.log(error);
+          console.log("error", error);
         }
         try {
           const response = await axios.get(`${baseURL}/comic/${favoris[i]}`);
-          // console.log("comic>>>", response2.data);
           if (response.data) {
             tabDataComics.push(response.data);
           }
         } catch (error) {
-          console.log(error);
+          console.log("error", error);
         }
         setDataCharacters(tabDataCharacters);
         setDataComics(tabDataComics);
         setIsLoading(false);
-
-        console.log("tabdatacharacters >>", tabDataCharacters);
-        console.log("tabdataComics >>", tabDataComics);
       }
     };
     fetchData();

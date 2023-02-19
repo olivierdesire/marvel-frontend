@@ -28,8 +28,6 @@ const Comics = ({
         const response = await axios.get(`${baseURL}/comics${filters}`);
         setData(response.data.results);
         setIsLoading(false);
-
-        console.log("response.data >>", response.data);
       } catch (error) {
         console.log("error", error);
       }
