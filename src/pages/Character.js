@@ -1,8 +1,7 @@
 import { Link, useLocation } from "react-router-dom";
 import ListOfComics from "../components/ListOfComics";
-import Cookies from "js-cookie";
 
-const Character = ({ baseURL, setIsReloaded }) => {
+const Character = ({ baseURL, favoris, setFavoris, updateCookie }) => {
   const location = useLocation();
 
   const character = location.state.character;
@@ -10,11 +9,13 @@ const Character = ({ baseURL, setIsReloaded }) => {
   const sizeMaxPicture = "/portrait_fantastic.";
   //   const sizeMaxPicture = "/standard_fantastic.";
 
-  let cookieStar = false;
-  if (Cookies.get(`${character._id}`)) {
-    cookieStar = true;
+  let cookieStar = true;
+  const indexFavoris = favoris.indexOf(character._id);
+  if (indexFavoris === -1) {
+    cookieStar = false;
   }
 
+  console.log("tabFavoris", favoris);
   return (
     <div className="character-page">
       <div className="container">
@@ -37,12 +38,16 @@ const Character = ({ baseURL, setIsReloaded }) => {
                     : "favoris-character color-grey"
                 }
                 onClick={() => {
-                  if (Cookies.get(`${character._id}`)) {
-                    Cookies.remove(`${character._id}`);
-                    setIsReloaded((current) => !current);
+                  if (cookieStar) {
+                    const copyArray = [...favoris];
+                    copyArray.splice(indexFavoris, 1);
+                    setFavoris(copyArray);
+                    updateCookie(copyArray);
                   } else {
-                    Cookies.set(`${character._id}`, character._id);
-                    setIsReloaded((current) => !current);
+                    const copyArray = [...favoris];
+                    copyArray.push(character._id);
+                    setFavoris(copyArray);
+                    updateCookie(copyArray);
                   }
                 }}
               >

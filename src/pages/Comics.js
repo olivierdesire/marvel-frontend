@@ -1,8 +1,14 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Cookies from "js-cookie";
 
-const Comics = ({ baseURL, search, pages, favoris, setIsReloaded }) => {
+const Comics = ({
+  baseURL,
+  search,
+  pages,
+  favoris,
+  setFavoris,
+  updateCookie,
+}) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -41,9 +47,10 @@ const Comics = ({ baseURL, search, pages, favoris, setIsReloaded }) => {
       </div>
       <div className="list-comics container">
         {data.map((element) => {
-          let cookieStar = false;
-          if (Cookies.get(`${element._id}`)) {
-            cookieStar = true;
+          let cookieStar = true;
+          const indexFavoris = favoris.indexOf(element._id);
+          if (indexFavoris === -1) {
+            cookieStar = false;
           }
           return (
             <div key={element._id} className="comic">
@@ -68,16 +75,16 @@ const Comics = ({ baseURL, search, pages, favoris, setIsReloaded }) => {
                       : "favoris-comics color-grey"
                   }
                   onClick={() => {
-                    if (Cookies.get(`${element._id}`)) {
-                      Cookies.remove(`${element._id}`);
-                      favoris.splice(favoris.indexOf(element._id), 1);
-                      console.log("favoris", favoris);
-                      setIsReloaded((current) => !current);
+                    if (cookieStar) {
+                      const copyArray = [...favoris];
+                      copyArray.splice(indexFavoris, 1);
+                      setFavoris(copyArray);
+                      updateCookie(copyArray);
                     } else {
-                      Cookies.set(`${element._id}`, element._id);
-                      favoris.push(element._id);
-                      console.log("favoris", favoris);
-                      setIsReloaded((current) => !current);
+                      const copyArray = [...favoris];
+                      copyArray.push(element._id);
+                      setFavoris(copyArray);
+                      updateCookie(copyArray);
                     }
                   }}
                 >

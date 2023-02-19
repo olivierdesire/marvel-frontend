@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import Cookies from "js-cookie";
 import axios from "axios";
 
-const ComicsCharacter = ({ baseURL, favoris, setIsReloaded }) => {
+const ComicsCharacter = ({ baseURL, favoris, setFavoris, updateCookie }) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -15,6 +14,7 @@ const ComicsCharacter = ({ baseURL, favoris, setIsReloaded }) => {
   const character = location.state?.character;
   const characterID = location.state?.character._id;
 
+  console.log("tabFavoris", favoris);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -57,9 +57,10 @@ const ComicsCharacter = ({ baseURL, favoris, setIsReloaded }) => {
       </div>
       <div className="list-comics container">
         {data.comics.map((element) => {
-          let cookieStar = false;
-          if (Cookies.get(`${element._id}`)) {
-            cookieStar = true;
+          let cookieStar = true;
+          const indexFavoris = favoris.indexOf(element._id);
+          if (indexFavoris === -1) {
+            cookieStar = false;
           }
 
           return (
@@ -85,14 +86,16 @@ const ComicsCharacter = ({ baseURL, favoris, setIsReloaded }) => {
                       : "favoris-comics color-grey"
                   }
                   onClick={() => {
-                    if (Cookies.get(`${element._id}`)) {
-                      Cookies.remove(`${element._id}`);
-                      favoris.splice(favoris.indexOf(element._id), 1);
-                      setIsReloaded((current) => !current);
+                    if (cookieStar) {
+                      const copyArray = [...favoris];
+                      copyArray.splice(indexFavoris, 1);
+                      setFavoris(copyArray);
+                      updateCookie(copyArray);
                     } else {
-                      Cookies.set(`${element._id}`, element._id);
-                      favoris.push(element._id);
-                      setIsReloaded((current) => !current);
+                      const copyArray = [...favoris];
+                      copyArray.push(character._id);
+                      setFavoris(copyArray);
+                      updateCookie(copyArray);
                     }
                   }}
                 >

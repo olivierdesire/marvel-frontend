@@ -13,18 +13,26 @@ function App() {
   const [search, setSearch] = useState("");
   const [pages, setPages] = useState(1);
   const [origin, setOrigin] = useState("Characters");
-  const [isReloaded, setIsReloaded] = useState(false);
 
   const baseURL = "https://site--marvel-backend--97yqlpf4l44b.code.run";
   // const baseURL = "http://localhost:3001";
 
-  // Récupération des Cookies
-  const recupFavoris = () => {
-    const objectCookies = Cookies.get();
-    return Object.values(objectCookies);
+  const parseCookie = () => {
+    let newArray = [];
+    if (Cookies.get("Favoris")) {
+      newArray = JSON.parse(Cookies.get("Favoris"));
+    }
+    return newArray;
   };
 
-  const favoris = recupFavoris();
+  const updateCookie = (array) => {
+    let str = "";
+    Cookies.remove("Favoris");
+    str = JSON.stringify(array);
+    Cookies.set("Favoris", str);
+  };
+
+  const [favoris, setFavoris] = useState(parseCookie());
 
   return (
     <BrowserRouter>
@@ -45,7 +53,8 @@ function App() {
               search={search}
               pages={pages}
               favoris={favoris}
-              setIsReloaded={setIsReloaded}
+              setFavoris={setFavoris}
+              updateCookie={updateCookie}
             />
           }
         />
@@ -57,14 +66,20 @@ function App() {
               search={search}
               pages={pages}
               favoris={favoris}
-              setIsReloaded={setIsReloaded}
+              setFavoris={setFavoris}
+              updateCookie={updateCookie}
             />
           }
         />
         <Route
           path="/Character"
           element={
-            <Character baseURL={baseURL} setIsReloaded={setIsReloaded} />
+            <Character
+              baseURL={baseURL}
+              favoris={favoris}
+              setFavoris={setFavoris}
+              updateCookie={updateCookie}
+            />
           }
         />
         <Route
@@ -73,7 +88,8 @@ function App() {
             <ComicsCharacter
               baseURL={baseURL}
               favoris={favoris}
-              setIsReloaded={setIsReloaded}
+              setFavoris={setFavoris}
+              updateCookie={updateCookie}
             />
           }
         />
@@ -83,7 +99,8 @@ function App() {
             <Favoris
               baseURL={baseURL}
               favoris={favoris}
-              setIsReloaded={setIsReloaded}
+              setFavoris={setFavoris}
+              updateCookie={updateCookie}
             />
           }
         />
