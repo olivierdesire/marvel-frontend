@@ -34,10 +34,10 @@ const Favoris = ({ baseURL, favoris, setFavoris, updateCookie }) => {
         } catch (error) {
           console.log("error", error);
         }
-        setDataCharacters(tabDataCharacters);
-        setDataComics(tabDataComics);
-        setIsLoading(false);
       }
+      setDataCharacters(tabDataCharacters);
+      setDataComics(tabDataComics);
+      setIsLoading(false);
     };
     fetchData();
   }, [baseURL, favoris]);
