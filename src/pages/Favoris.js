@@ -86,7 +86,7 @@ const Favoris = ({ baseURL, favoris, setFavoris, updateCookie }) => {
                       copyArray.splice(indexFavoris, 1);
                       setFavoris(copyArray);
                       updateCookie(copyArray);
-                      setIsLoading(true);
+                      // setIsLoading(true);
                     }}
                   >
                     ⭑
@@ -138,7 +138,7 @@ const Favoris = ({ baseURL, favoris, setFavoris, updateCookie }) => {
                       copyArray.splice(indexFavoris, 1);
                       setFavoris(copyArray);
                       updateCookie(copyArray);
-                      setIsLoading(true);
+                      // setIsLoading(true);
                     }}
                   >
                     ⭑

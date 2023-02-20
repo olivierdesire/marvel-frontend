@@ -43,6 +43,8 @@ function App() {
         setPages={setPages}
         origin={origin}
         setOrigin={setOrigin}
+        favoris={favoris}
+        setFavoris={setFavoris}
       />
       <Routes>
         <Route
