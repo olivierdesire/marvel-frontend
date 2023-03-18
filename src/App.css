@@ -64,6 +64,11 @@ header input {
   outline: none;
 }
 
+.sound-button {
+  background-color: white;
+  border: none;
+}
+
 .page {
   width: fit-content;
   display: flex;

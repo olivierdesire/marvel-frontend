@@ -27,7 +27,6 @@ const Characters = ({
       }
       try {
         const response = await axios.get(`${baseURL}/characters${filters}`);
-
         setData(response.data.results);
         setIsLoading(false);
       } catch (error) {
@@ -38,6 +37,7 @@ const Characters = ({
     fetchData();
   }, [baseURL, search, pages, favoris]);
 
+  console.log("isLoading", isLoading);
   return isLoading ? (
     <div>Downloading</div>
   ) : (

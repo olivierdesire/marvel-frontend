@@ -1,7 +1,13 @@
 import logo from "../assets/img/Marvel.png";
 import { Link } from "react-router-dom";
-
+import useSound from "use-sound";
+import boopSfx from "../assets/sound/marvel-intro.mp3";
 const Header = ({ search, setSearch, pages, setPages, origin, setOrigin }) => {
+  const BoopButton = () => {
+    const [play] = useSound(boopSfx);
+    return play;
+  };
+
   return (
     <header>
       <div className="container">
@@ -71,6 +77,11 @@ const Header = ({ search, setSearch, pages, setPages, origin, setOrigin }) => {
               setSearch(event.target.value);
             }}
           />
+        </div>
+        <div>
+          <button className="sound-button" onClick={BoopButton}>
+            ▶️
+          </button>
         </div>
         <div>
           <div
