@@ -53,6 +53,14 @@ header > div > div button {
   color: white;
 }
 
+.color-button-red-margin {
+  background-color: red;
+  color: white;
+  font-size: 14px;
+  padding: 5px;
+  border-radius: 5px;
+}
+
 header input {
   margin-top: 20px;
   width: 500px;
